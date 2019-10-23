@@ -41,7 +41,45 @@
 // @lc code=start
 class Solution {
     public int strStr(String haystack, String needle) {
-        return haystack.indexOf(needle);
+        // return haystack.indexOf(needle);
+        char[] ns = needle.toCharArray();
+        int start = -1;
+        int end = -1;
+        if(needle.length()==0){
+            return 0;
+        }
+        for(int i = 0;i < haystack.length(); i++){
+            if(haystack.charAt(i) == ns[0]){
+                start = i;
+                break;
+            }
+        }
+        if(start == -1){
+            return -1;
+        }
+        for(int i = haystack.length() - 1 ;i >= 0; i--){
+            if(haystack.charAt(i) == ns[needle.length()-1]){
+                end = i;
+                break;
+            }
+        }
+        int i = start;
+        int j = 0;
+        do{
+            if(ns[j] == haystack.charAt(i)){
+                i++;
+                j++;
+            }else{
+                start++;
+                i = start;
+                j = 0;
+            }
+        }while(i <= end&&j < needle.length());
+        // return start*10+end;
+        if(end - start < needle.length() - 1){
+            return -1;
+        }
+        return start;
     }
 }
 // @lc code=end
