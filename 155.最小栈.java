@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /*
  * @lc app=leetcode.cn id=155 lang=java
  *
@@ -38,27 +40,44 @@
 
 // @lc code=start
 class MinStack {
-    private Stack<Integer> s;
+    private Stack<Integer> base;
+
+    private Stack<Integer> min;
 
     /** initialize your data structure here. */
     public MinStack() {
-
+        base = new Stack<>();
+        min = new Stack<>();
     }
     
     public void push(int x) {
-
+        base.push(x);
+        if(min.isEmpty()||min.peek() >= x){
+            min.push(x);
+        } else {
+            min.push(min.peek());
+        }
     }
     
     public void pop() {
-
+        if(!base.isEmpty()){
+            base.pop();
+            min.pop();
+        }
     }
     
     public int top() {
-
+        if(!base.isEmpty()){
+            return base.peek();
+        }
+        throw new RuntimeException();
     }
     
     public int getMin() {
-
+        if(!min.isEmpty()){
+            return min.peek();
+        }
+        throw new RuntimeException();
     }
 }
 
