@@ -38,15 +38,48 @@ class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
-        if(nums.length<3||nums[0]>0||nums[nums.length-1]<0){
-            return list;
-        }
-        int a = 0,b = 1,c = 2;
-        while(a < b && b < c){
-            if(nums[a]+nums[b]<-nums[c]){
-                c++;
+        for(int k = 0;k<nums.length-2;k++) {
+            if (nums[k] > 0) {
+                break;
             }
+            if(k > 0 && nums[k] == nums[k - 1]) {
+                continue;
+            }
+            int i = k + 1, j = nums.length - 1;
+            while(i < j){
+                int sum = nums[k] + nums[i] + nums[j];
+                if(sum < 0){
+                    while(i < j && nums[i] == nums[++i]);
+                } else if (sum > 0) {
+                    while(i < j && nums[j] == nums[--j]);
+                } else {
+                    list.add(new ArrayList<Integer>(Arrays.asList(nums[k], nums[i], nums[j])));
+                    while(i < j && nums[i] == nums[++i]);
+                    while(i < j && nums[j] == nums[--j]);
+                }
+            }
+            // for(int j = i + 1;j<nums.length;j++) {
+            //     b = nums[j];
+            //     for(int k = nums.length - 1;k>=j + 1;k--) {
+            //         c = nums[k];
+            //         if ((c > 0 && a > 0) || (c < 0 && a < 0)) {
+            //             break;
+            //         }
+            //         if(a+b+c < 0) {
+            //             break;
+            //         }
+            //         if(a+b+c==0) {
+            //             List<Integer> arr = new ArrayList();
+            //             arr.add(a);
+            //             arr.add(b);
+            //             arr.add(c);
+            //             list.add(arr);
+            //             break;
+            //         }
+            //     }
+            //}
         }
+        return list;
     }
 }
 // @lc code=end
